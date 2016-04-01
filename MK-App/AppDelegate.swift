@@ -1,3 +1,4 @@
+
 //
 //  AppDelegate.swift
 //  MK-App
@@ -16,7 +17,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        UIApplication.sharedApplication().setStatusBarStyle(UIStatusBarStyle.Default, animated: true)
+    
+        
+        do {
+        
+        let documentsPath = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0])
+        let logsPath = documentsPath.URLByAppendingPathComponent("info.txt")
+        let data = try NSString(contentsOfFile: logsPath.path!, encoding: NSUTF8StringEncoding)
+        
+            if(!(data as String).isEmpty) {
+                // mainStoryboard
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                
+                // rootViewController
+                let rootViewController = mainStoryboard.instantiateViewControllerWithIdentifier("plan") as? PlanViewController
+                
+                // navigationController
+                let navigationController = UINavigationController(rootViewController: rootViewController!)
+                navigationController.navigationBarHidden = true
+                
+                // self.window
+                self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                
+                self.window!.rootViewController = navigationController
+                
+                self.window!.makeKeyAndVisible()
+            
+            }
+            
+
+        } catch {
+            
+        }
+
+
+        
         return true
     }
 
